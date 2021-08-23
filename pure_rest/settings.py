@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
     # local
     'updates',
-    'status_app',
+    'status_app.apps.StatusAppConfig',
 ]
 
 MIDDLEWARE = [
