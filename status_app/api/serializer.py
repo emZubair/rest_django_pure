@@ -11,8 +11,9 @@ class StatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Status
         fields = [
-            'user', 'content', 'image'
+            'id', 'user', 'content', 'image'
         ]
+        read_only = ['id']
 
     # def validate_content(self, value):
     #     if len(value) > 64:
