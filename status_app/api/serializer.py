@@ -20,11 +20,11 @@ class StatusSerializer(serializers.ModelSerializer):
     #         raise serializers.ValidationError("Content must be less than 64 Characters")
     #     return value
 
-    def validated(self, data):
+    def validate(self, data):
         content = data.get('content', None)
         if content == '':
             content = None
         image = data.get('image', None)
         if content is None and image is None:
-            serializers.ValidationError('Image or Content are required Field')
+            raise serializers.ValidationError('Image or Content are required Field')
         return data

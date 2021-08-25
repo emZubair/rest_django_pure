@@ -1,19 +1,13 @@
 from django.urls import path
 from .views import (StatusListSearchAPIView,
                     StatusAPIView,
-                    StatusCreateAPIView,
-                    StatusDetailsAPIView,
-                    StatusUpdateAPIView,
-                    StatusDeleteAPIView
+                    StatusDetailsAPIView
                     )
 
 urlpatterns = [
     path(r'', StatusListSearchAPIView.as_view()),
     path(r'status', StatusAPIView.as_view()),
-    path(r'create', StatusCreateAPIView.as_view()),
-    path(r'<id>/update/', StatusUpdateAPIView.as_view()),
     path(r'<id>', StatusDetailsAPIView.as_view()),
-    path(r'<id>/delete/', StatusDeleteAPIView.as_view()),
 ]
 
 """
