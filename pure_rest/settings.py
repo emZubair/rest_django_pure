@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'pizza_store',
     'rest_framework',
+    'rest_framework.authtoken',
 
     # local
     'updates',
