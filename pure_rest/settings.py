@@ -128,10 +128,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 from os import path as os_path
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-STATIC_ROOT = os_path.join(str(BASE_DIR), 'static/')
-MEDIA_ROOT = os_path.join(str(BASE_DIR), 'media/')
+
+if DEBUG:
+    STATIC_URL = '/static/'
+    STATIC_FILES_DIR = [
+        os_path.join(BASE_DIR, STATIC_URL)
+    ]
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os_path.join(str(BASE_DIR), 'media/')
+    STATIC_ROOT = os_path.join(str(BASE_DIR), 'static/')
+else:
+    STATIC_ROOT = '/var/www/static/'
+
+    STATIC_FILES_DIR = [
+        os_path.join(BASE_DIR, STATIC_ROOT)
+    ]
+    MEDIA_URL = '/media/'
+    media = os_path.join(BASE_DIR, '/var/wws/static/media/')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
