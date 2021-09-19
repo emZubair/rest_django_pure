@@ -20,11 +20,15 @@ from django.conf import settings
 
 from rest_framework.authtoken.views import obtain_auth_token
 
+from status_app.views import home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home, name='home'),
     path('status/', include('status_app.api.urls')),
     path('updates/', include('updates.urls')),
     path('pizza/', include('pizza_store.urls')),
+    path('accounts/', include('accounts.urls')),
     path('api-token-auth/', obtain_auth_token),
 ]
 
