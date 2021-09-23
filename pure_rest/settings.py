@@ -19,9 +19,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#p^z5e)79u^-gag9fuivm)_vkqdfrdak1_w3dp50ifn#obfn&z'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -147,6 +144,22 @@ else:
     MEDIA_URL = '/media/'
     media = os_path.join(BASE_DIR, '/var/wws/static/media/')
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'accounts.pagination.PureRestPagination',
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter'
+    ),
+    'SEARCH_PARAM': 'q',
+    'ORDERING_PARAM': 'ordering'
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

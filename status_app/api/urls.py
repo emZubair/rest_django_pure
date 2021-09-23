@@ -1,13 +1,16 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import (StatusListSearchAPIView,
                     StatusAPIView,
                     StatusDetailsAPIView
                     )
 
+
+app_name = 'status_app'
+
 urlpatterns = [
-    path(r'', StatusListSearchAPIView.as_view()),
-    path(r'status', StatusAPIView.as_view()),
-    path(r'<id>', StatusDetailsAPIView.as_view()),
+    path(r'', StatusAPIView.as_view(), name='list'),
+    path(r'<pk>', StatusListSearchAPIView.as_view(), 'detail_status'),
+    path(r'<id>', StatusDetailsAPIView.as_view(), name='sim'),
 ]
 
 """

@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
+from rest_framework.reverse import reverse as api_reverse
 from rest_framework.authtoken.models import Token
 
 from .models import Pizzeria, PizzaImage
@@ -18,7 +19,8 @@ class PizzeriaListSerializer(serializers.ModelSerializer):
                   'is_active', 'email', 'absolute_url')
 
     def get_absolute_url(self, obj):
-        return reverse('pizza_details', args=(obj.pk,))
+        request = self.context.get('request')
+        return api_reverse('pizza:pizza_details', args=(obj.pk,), request=request)
 
 
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
@@ -38,11 +40,16 @@ class PizzeriaDetailsSerializer(serializers.ModelSerializer):
         fields = ('pizzeria_name', 'city', 'phone_number', 'state',
                   'description', 'is_active', 'email', 'update', 'delete', 'images')
 
+    @property
+    def request(self):
+        return self.context.get('request')
+
     def get_update(self, obj):
-        return reverse('pizza_update', args=(obj.pk,))
+
+        return api_reverse('pizza:pizza_update', args=(obj.pk,), request=self.request)
 
     def get_delete(self, obj):
-        return reverse('pizza_delete', args=(obj.pk,))
+        return api_reverse('pizza:pizza_delete', args=(obj.pk,), request=self.request)
 
 
 class CreateUserSerializer(serializers.ModelSerializer):

@@ -1,11 +1,15 @@
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, get_user_model
 
 from rest_framework import status
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+
+from .serializers import UserDetailsSerializers
 
 
 class AuthView(ObtainAuthToken):
@@ -34,3 +38,15 @@ class AuthView(ObtainAuthToken):
         user = serializer.validated_data.get('user')
         token, created = Token.objects.get_or_create(user=user)
         return Response({'user': user.id, 'token': token.key, 'email': user.email}, status=status.HTTP_200_OK)
+
+
+class UserDetailsAPIView(generics.RetrieveAPIView):
+    lookup_field = 'id'
+    serializer_class = UserDetailsSerializers
+
+    def get_queryset(self):
+
+        return User.objects.filter(id=self.kwargs.get('id'))
+
+    def get_serializer_context(self):
+        return {'request': self.request}
