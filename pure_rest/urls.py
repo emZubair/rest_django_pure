@@ -25,10 +25,10 @@ from status_app.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('status/', include('status_app.api.urls')),
+    path('status/', include('status_app.api.urls', namespace='status')),
     path('updates/', include('updates.urls')),
-    path('pizza/', include('pizza_store.urls')),
-    path('accounts/', include('accounts.urls')),
+    path('pizza/', include('pizza_store.urls', namespace='pizza')),
+    path('accounts/', include('accounts.urls', namespace='user_details')),
     path('api-token-auth/', obtain_auth_token),
 ]
 

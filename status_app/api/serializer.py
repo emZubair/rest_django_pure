@@ -8,10 +8,16 @@ class StatusSerializer(serializers.ModelSerializer):
     Serializer for Status Model
     """
 
+    # user = serializers.HyperlinkedRelatedField(lookup_field='id', read_only=True,
+    #                                            view_name='accounts:user_details')
+    user_details = serializers.HyperlinkedRelatedField(source='user', lookup_field='id', read_only=True,
+                                                       view_name='accounts:user_details')
+    username = serializers.SlugRelatedField(source='user', read_only='True', slug_field='email')
+
     class Meta:
         model = Status
         fields = [
-            'id', 'user', 'content', 'image'
+            'id', 'user', 'content', 'image', 'username', 'user_details'
         ]
         read_only = ['id']
 
